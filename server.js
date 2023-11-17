@@ -8,26 +8,26 @@ const PORT = 5000;
 app.use(bodyParser.json());
 
 // Middleware de autenticación
-const authMiddleware = require('./middlewares/authMiddleware');
+const authMiddleware = require('./src/middlewares/authMiddleware.js');
 
 
 // Controladores
-const authController = require('./controllers/authController');
-const geoController = require('./controllers/geoController');
-const geofenceController = require('./controllers/geofenceController');
-const geoblockController = require('./controllers/geoblockController');
-const userController = require('./controllers/userController');
-const trackingController = require('./controllers/trackingController');
-const notificationController = require('./controllers/notificationController');
-const geoShapeController = require('./controllers/geoShapeController');
-const configController = require('./controllers/configController');
+const authController = require('./src/controllers/authController');
+const geoController = require('./src/controllers/geoController');
+const geofenceController = require('./src/controllers/geofenceController');
+const geoblockController = require('./src/controllers/geoblockController');
+const userController = require('./src/controllers/userController');
+const trackingController = require('./src/controllers/trackingController');
+const notificationController = require('./src/controllers/notificationController');
+const geoShapeController = require('./src/controllers/geoShapeController');
+const configController = require('./src/controllers/configController');
 
-// Configuración de MySQL
+// Configuración de MySQL Maria DB
 const connection = mysql.createConnection({
-    host: 'mi_host_mysql',
-    user: 'mi_usuario_mysql',
-    password: 'mi_contraseña_mysql',
-    database: 'mi_base_de_datos_mysql',
+    host: '127.0.0.1',
+    user: 'root',
+    password: '1234',
+    database: 'Geocustodian', 
   });
   
 // Conectar a la base de datos MySQL
