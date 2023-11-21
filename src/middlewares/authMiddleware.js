@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secretKey = '1234';
+const secretKey = 'null';
 
 module.exports = (req, res, next) => {
   // Se obtiene el token de la cabecera de autorización

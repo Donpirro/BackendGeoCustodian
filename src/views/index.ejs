@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Node.js Google Map</title>
+</head>
+<body>
+    <div id="map" style="width:100%;height:400px;"></div>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_tO9nbpH2jp0LOF3aWX29QOGVhoGcjeY&callback=initMap">
+    </script>
+    <script>
+        // Initializing the map
+        function initMap() {
+            // Reemplaza estas coordenadas con la ubicación que deseas mostrar inicialmente
+            var initialLocation = {lat: 40.7128, lng: -74.0060};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: initialLocation
+            });
+        }
+    </script>
+</body>
+</html>

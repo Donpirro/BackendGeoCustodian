@@ -1,8 +1,13 @@
-const { Sequelize } = require('sequelize');
+const mysql = require('mysql2');
+const dotenv = require('dotenv');
 
-const sequelize = new Sequelize('geocustodian', 'root', '1234', {
-  host: '127.0.0.1',
-  dialect: 'mariadb',
+dotenv.config();
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
-module.exports = sequelize;
+module.exports = pool;

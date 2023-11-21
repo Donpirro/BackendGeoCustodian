@@ -2,15 +2,25 @@ const { Sequelize } = require('sequelize');
 const User = require('./user');
 const Vehicle = require('./vehicle');
 
-// Configuración de la base de datos
-const sequelize = new Sequelize('mi_base_de_datos_mysql', 'mi_usuario_mysql', 'mi_contraseña_mysql', {
-  host: 'mi_host_mysql',
-  dialect: 'mysql',
+const sequelize = new Sequelize({
+  host: '127.0.0.1',
+  user: 'root',
+  password: 'y[cJWL2O*i(l4-NB',
+  database: 'geocustodian',
 });
 
-// Asociaciones entre modelos (puedes personalizar según tus necesidades)
+// Importa los modelos
+const User = require('./user');
+const Vehicle = require('./vehicle');
+const Geofence = require('./geofence');
+const Tracking = require('./tracking');
+const Notification = require('./notification');
+
+// Asociaciones entre modelos
 User.hasMany(Vehicle);
 Vehicle.belongsTo(User);
+
+// ... Otras asociaciones si es necesario
 
 // Verificar la conexión
 async function testConnection() {

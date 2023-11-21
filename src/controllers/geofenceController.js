@@ -1,22 +1,58 @@
-// Supongamos que tenemos un array para almacenar geocercas como base de datos temporal
-let geofences = [
-    { id: 1, name: 'Geocerca 1', latitude: 123.456, longitude: -789.012, radius: 50 },
-    { id: 2, name: 'Geocerca 2', latitude: 456.789, longitude: -123.012, radius: 75 },
-  ];
-  
-  // Obtener todas las geocercas
-  exports.getGeofences = (req, res) => {
-    res.json(geofences);
-  };
-  
-  // Obtener una geocerca por ID
-  exports.getGeofenceById = (req, res) => {
-    const { id } = req.params;
-    const geofence = geofences.find((geo) => geo.id === parseInt(id));
-  
+const googleMapsService = require('../service/googleMapsService');
+const Geofence = require('../models/geofence');
+
+// Obtener todas las geocercas
+exports.getGeofence = async (req, res) => {
+  try {
+    const geofence = await Geofence.findAll();
+    res.json(geofence);
+  } catch (error) {
+    console.error('Error al obtener las geocercas:', error);
+    res.status(500).json({ error: 'Error al obtener las geocercas.' });
+  }
+};
+
+// Obtener una geocerca por ID
+exports.getGeofenceById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const geofence = await Geofence.findByPk(id);
+
     if (geofence) {
       res.json(geofence);
     } else {
-      res.status(404).json({ message: 'Geocerca no encontrada' });
+      res.status(404).json({ message: 'Geocerca no encontrada.' });
     }
-  };
+  } catch (error) {
+    console.error('Error al obtener la geocerca por ID:', error);
+    res.status(500).json({ error: 'Error al obtener la geocerca por ID.' });
+  }
+};
+
+const createGeofence = async (req, res) => {
+  const address = req.body.address;
+  const geofenceName = req.body.name || 'Nombre predeterminado';
+
+  try {
+    // Obtener las coordenadas desde Google Maps
+    const location = await googleMapsService.geocodeAddress(address);
+
+    // Crear una nueva geocerca en la base de datos utilizando Sequelize
+    const newGeofence = await Geofence.create({
+      name: geofenceName,
+      latitude: location.lat,
+      longitude: location.lng,
+    });
+
+    // Respondemos con un mensaje de éxito y la información de la nueva geocerca
+    res.status(200).json({ message: 'Geocerca creada exitosamente.', geofence: newGeofence });
+  } catch (error) {
+    console.error(error);
+
+    // Respondemos con un mensaje de error
+    res.status(500).json({ error: 'Error al crear la geocerca.' });
+  }
+};
+
+module.exports = { createGeofence };

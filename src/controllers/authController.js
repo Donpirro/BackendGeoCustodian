@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
-const Vehicle = require('../models/vehicle');
+//const User = require('../models/user');
+//const Vehicle = require('../models/vehicle');
 
 // Endpoint para iniciar sesión
 exports.login = async (req, res, connection) => {
